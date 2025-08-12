@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,20 +17,24 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                Khám phá thế giới
-                <span className="text-primary"> mua sắm</span> mới
+                Discover Amazing
+                <span className="text-primary"> Products</span> Today
               </h1>
               <p className="text-lg text-muted-foreground">
-                Hàng triệu sản phẩm chất lượng, giá tốt nhất thị trường. Giao
-                hàng nhanh, đổi trả dễ dàng.
+                Millions of quality products at the best prices. Fast shipping
+                and easy returns.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8">
-                  Mua sắm ngay
-                </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8">
-                  Khám phá danh mục
-                </Button>
+                <Link href="/products">
+                  <Button size="lg" className="text-lg px-8">
+                    Shop Now
+                  </Button>
+                </Link>
+                <Link href="/categories">
+                  <Button variant="outline" size="lg" className="text-lg px-8">
+                    Browse Categories
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="relative">
@@ -45,27 +50,41 @@ export default function Home() {
       {/* Featured Categories */}
       <section className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8">
-          Danh mục nổi bật
+          Featured Categories
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            { name: "Điện tử", icon: "📱", count: "1,234" },
-            { name: "Thời trang", icon: "👕", count: "2,567" },
-            { name: "Gia dụng", icon: "🏠", count: "890" },
-            { name: "Sách", icon: "📚", count: "3,456" },
+            {
+              name: "Electronics",
+              icon: "📱",
+              count: "1,234",
+              href: "/category/electronics",
+            },
+            {
+              name: "Fashion",
+              icon: "👕",
+              count: "2,567",
+              href: "/category/fashion",
+            },
+            { name: "Home", icon: "🏠", count: "890", href: "/category/home" },
+            {
+              name: "Books",
+              icon: "📚",
+              count: "3,456",
+              href: "/category/books",
+            },
           ].map((category) => (
-            <Card
-              key={category.name}
-              className="text-center hover:shadow-lg transition-shadow cursor-pointer"
-            >
-              <CardContent className="pt-6">
-                <div className="text-4xl mb-2">{category.icon}</div>
-                <h3 className="font-semibold">{category.name}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {category.count} sản phẩm
-                </p>
-              </CardContent>
-            </Card>
+            <Link key={category.name} href={category.href}>
+              <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="pt-6">
+                  <div className="text-4xl mb-2">{category.icon}</div>
+                  <h3 className="font-semibold">{category.name}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {category.count} products
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
       </section>
@@ -73,8 +92,10 @@ export default function Home() {
       {/* Featured Products */}
       <section className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold">Sản phẩm nổi bật</h2>
-          <Button variant="outline">Xem tất cả</Button>
+          <h2 className="text-3xl font-bold">Featured Products</h2>
+          <Link href="/products">
+            <Button variant="outline">View All</Button>
+          </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (

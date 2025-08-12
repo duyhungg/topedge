@@ -2,13 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X, Heart } from "lucide-react";
+import {
+  Search,
+  ShoppingCart,
+  User,
+  Menu,
+  X,
+  Heart,
+  LogIn,
+  UserPlus,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useCart } from "@/lib/cart-context";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cart } = useCart();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -20,11 +31,14 @@ export function Header() {
               <span>Miễn phí vận chuyển cho đơn hàng trên 500k</span>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/help" className="hover:underline">
-                Hỗ trợ
+              <Link href="/login" className="hover:underline">
+                Sign In
               </Link>
-              <Link href="/track" className="hover:underline">
-                Theo dõi đơn hàng
+              <Link href="/register" className="hover:underline">
+                Sign Up
+              </Link>
+              <Link href="/help" className="hover:underline">
+                Help
               </Link>
             </div>
           </div>
@@ -98,10 +112,12 @@ export function Header() {
               <Button variant="ghost" size="icon" className="relative" asChild>
                 <Link href="/cart">
                   <ShoppingCart className="h-5 w-5" />
-                  <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
-                    3
-                  </span>
-                  <span className="sr-only">Giỏ hàng</span>
+                  {cart.itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
+                      {cart.itemCount}
+                    </span>
+                  )}
+                  <span className="sr-only">Shopping Cart</span>
                 </Link>
               </Button>
             </div>
@@ -132,34 +148,40 @@ export function Header() {
           {/* Desktop navigation */}
           <div className="hidden md:flex items-center space-x-8 py-3">
             <Link
+              href="/products"
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              Products
+            </Link>
+            <Link
               href="/categories"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Danh mục
+              Categories
             </Link>
             <Link
               href="/deals"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Khuyến mãi
+              Deals
             </Link>
             <Link
-              href="/new-arrivals"
+              href="/blog"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Hàng mới
+              Blog
             </Link>
             <Link
-              href="/bestsellers"
+              href="/about"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Bán chạy
+              About
             </Link>
             <Link
-              href="/brands"
+              href="/contact"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Thương hiệu
+              Contact
             </Link>
           </div>
 
@@ -187,44 +209,68 @@ export function Header() {
                 >
                   <Link href="/cart">
                     <ShoppingCart className="h-5 w-5" />
-                    <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
-                      3
-                    </span>
+                    {cart.itemCount > 0 && (
+                      <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center">
+                        {cart.itemCount}
+                      </span>
+                    )}
                   </Link>
                 </Button>
               </div>
 
               <div className="space-y-3">
                 <Link
+                  href="/products"
+                  className="block text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Products
+                </Link>
+                <Link
                   href="/categories"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Danh mục
+                  Categories
                 </Link>
                 <Link
                   href="/deals"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Khuyến mãi
+                  Deals
                 </Link>
                 <Link
-                  href="/new-arrivals"
+                  href="/blog"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Hàng mới
+                  Blog
                 </Link>
                 <Link
-                  href="/bestsellers"
+                  href="/about"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Bán chạy
+                  About
                 </Link>
                 <Link
-                  href="/brands"
+                  href="/contact"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Thương hiệu
+                  Contact
                 </Link>
+                <div className="pt-3 border-t space-y-3">
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
+                  >
+                    <UserPlus className="h-4 w-4" />
+                    Sign Up
+                  </Link>
+                </div>
               </div>
             </div>
           )}
