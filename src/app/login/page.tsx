@@ -8,12 +8,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { loginSchema, LoginFormData } from "@/lib/validations";
+import { AuthLayout } from "@/components/layout/AuthLayout";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,20 +46,20 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
-    
+
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      
+
       // In a real app, you would make an API call here
       console.log("Login data:", data);
-      
+
       toast({
         title: "Welcome back!",
         description: "You have been successfully signed in.",
         variant: "success",
       });
-      
+
       // Redirect to home page or dashboard
       router.push("/");
     } catch (error) {
@@ -60,18 +74,23 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <AuthLayout>
       <div className="max-w-md w-full space-y-8">
         <Card>
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Sign in to your account</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">
+              Sign in to your account
+            </CardTitle>
             <CardDescription className="text-center">
               Enter your email and password to access your account
             </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <FormField
                   control={form.control}
                   name="email"
@@ -147,7 +166,7 @@ export default function LoginPage() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <Link
                     href="/forgot-password"
                     className="text-sm font-medium text-primary hover:underline"
@@ -157,7 +176,9 @@ export default function LoginPage() {
                 </div>
 
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {isLoading && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
                   Sign In
                 </Button>
               </form>
@@ -198,7 +219,11 @@ export default function LoginPage() {
                   Google
                 </Button>
                 <Button variant="outline" disabled={isLoading}>
-                  <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="mr-2 h-4 w-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"
@@ -224,6 +249,6 @@ export default function LoginPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
