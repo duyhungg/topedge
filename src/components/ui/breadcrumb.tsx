@@ -1,9 +1,10 @@
 import * as React from "react";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
+import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 const Breadcrumb = React.forwardRef<
-  HTMLElement,
+  React.ElementRef<"nav">,
   React.ComponentPropsWithoutRef<"nav"> & {
     separator?: React.ComponentType<{ className?: string }>;
   }
@@ -11,7 +12,7 @@ const Breadcrumb = React.forwardRef<
 Breadcrumb.displayName = "Breadcrumb";
 
 const BreadcrumbList = React.forwardRef<
-  HTMLOListElement,
+  React.ElementRef<"ol">,
   React.ComponentPropsWithoutRef<"ol">
 >(({ className, ...props }, ref) => (
   <ol
@@ -26,7 +27,7 @@ const BreadcrumbList = React.forwardRef<
 BreadcrumbList.displayName = "BreadcrumbList";
 
 const BreadcrumbItem = React.forwardRef<
-  HTMLLIElement,
+  React.ElementRef<"li">,
   React.ComponentPropsWithoutRef<"li">
 >(({ className, ...props }, ref) => (
   <li
@@ -38,12 +39,10 @@ const BreadcrumbItem = React.forwardRef<
 BreadcrumbItem.displayName = "BreadcrumbItem";
 
 const BreadcrumbLink = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a"> & {
-    asChild?: boolean;
-  }
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a"> & { asChild?: boolean }
 >(({ asChild, className, ...props }, ref) => {
-  const Comp = asChild ? React.Fragment : "a";
+  const Comp = asChild ? Slot : "a";
 
   return (
     <Comp
@@ -56,7 +55,7 @@ const BreadcrumbLink = React.forwardRef<
 BreadcrumbLink.displayName = "BreadcrumbLink";
 
 const BreadcrumbPage = React.forwardRef<
-  HTMLSpanElement,
+  React.ElementRef<"span">,
   React.ComponentPropsWithoutRef<"span">
 >(({ className, ...props }, ref) => (
   <span

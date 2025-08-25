@@ -59,7 +59,7 @@ export default function RegisterPage() {
       toast({
         title: "Account created successfully!",
         description: "Welcome to our platform. You can now sign in.",
-        variant: "success",
+        variant: "default",
       });
 
       // Redirect to login page

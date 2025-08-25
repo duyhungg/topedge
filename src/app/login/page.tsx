@@ -57,7 +57,7 @@ export default function LoginPage() {
       toast({
         title: "Welcome back!",
         description: "You have been successfully signed in.",
-        variant: "success",
+        variant: "default",
       });
 
       // Redirect to home page or dashboard

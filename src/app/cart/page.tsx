@@ -3,7 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft, CreditCard } from "lucide-react";
+import {
+  Minus,
+  Plus,
+  Trash2,
+  ShoppingBag,
+  ArrowLeft,
+  CreditCard,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +26,7 @@ export default function CartPage() {
 
   const handleUpdateQuantity = (itemId: string, newQuantity: number) => {
     updateQuantity(itemId, newQuantity);
-    
+
     if (newQuantity === 0) {
       toast({
         title: "Item removed",
@@ -49,17 +56,17 @@ export default function CartPage() {
 
   const handleCheckout = async () => {
     setIsLoading(true);
-    
+
     try {
       // Simulate checkout process
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      
+
       toast({
         title: "Checkout successful!",
         description: "Your order has been placed successfully.",
-        variant: "success",
+        variant: "default",
       });
-      
+
       clearCart();
     } catch (error) {
       toast({
@@ -99,7 +106,8 @@ export default function CartPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Shopping Cart</h1>
         <p className="text-muted-foreground">
-          {cart.itemCount} {cart.itemCount === 1 ? "item" : "items"} in your cart
+          {cart.itemCount} {cart.itemCount === 1 ? "item" : "items"} in your
+          cart
         </p>
       </div>
 
@@ -172,7 +180,9 @@ export default function CartPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                          onClick={() =>
+                            handleUpdateQuantity(item.id, item.quantity - 1)
+                          }
                           disabled={item.quantity <= 1}
                         >
                           <Minus className="h-4 w-4" />
@@ -183,7 +193,9 @@ export default function CartPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                          onClick={() =>
+                            handleUpdateQuantity(item.id, item.quantity + 1)
+                          }
                           disabled={item.quantity >= item.maxQuantity}
                         >
                           <Plus className="h-4 w-4" />
@@ -262,7 +274,9 @@ export default function CartPage() {
               {/* Security badges */}
               <div className="pt-4 border-t">
                 <div className="text-center space-y-2">
-                  <p className="text-sm text-muted-foreground">Secure Checkout</p>
+                  <p className="text-sm text-muted-foreground">
+                    Secure Checkout
+                  </p>
                   <div className="flex justify-center gap-2">
                     <Badge variant="outline" className="text-xs">
                       SSL Encrypted

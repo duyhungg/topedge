@@ -29,7 +29,7 @@ export default function ProductsPage() {
     toast({
       title: "Added to cart",
       description: `${product.title} added to your cart.`,
-      variant: "success",
+      variant: "default",
     });
   };
 
