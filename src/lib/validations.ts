@@ -1,31 +1,33 @@
 import { z } from "zod";
 
 // Authentication schemas
-export const registerSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Please enter a valid email address"),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-    ),
-  confirmPassword: z.string().min(1, "Please confirm your password"),
-  fullName: z
-    .string()
-    .min(2, "Full name must be at least 2 characters")
-    .max(50, "Full name must be less than 50 characters"),
-  phoneNumber: z
-    .string()
-    .min(10, "Phone number must be at least 10 digits")
-    .regex(/^\+?[\d\s-()]+$/, "Please enter a valid phone number"),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
+export const registerSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Please enter a valid email address"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+      ),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+    fullName: z
+      .string()
+      .min(2, "Full name must be at least 2 characters")
+      .max(50, "Full name must be less than 50 characters"),
+    phoneNumber: z
+      .string()
+      .min(10, "Phone number must be at least 10 digits")
+      .regex(/^\+?[\d\s-()]+$/, "Please enter a valid phone number"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 
 export const loginSchema = z.object({
   email: z
@@ -97,6 +99,22 @@ export const contactSchema = z.object({
     .max(1000, "Message must be less than 1000 characters"),
 });
 
+// Account schemas
+export const accountDetailsSchema = z.object({
+  fullName: z
+    .string()
+    .min(2, "Họ và tên phải có ít nhất 2 ký tự")
+    .max(50, "Họ và tên phải ít hơn 50 ký tự"),
+  phoneNumber: z
+    .string()
+    .min(10, "Số điện thoại phải có ít nhất 10 chữ số")
+    .regex(/^\+?[\d\s-()]+$/, "Vui lòng nhập số điện thoại hợp lệ"),
+  address: z
+    .string()
+    .min(5, "Địa chỉ phải có ít nhất 5 ký tự")
+    .max(200, "Địa chỉ phải ít hơn 200 ký tự"),
+});
+
 // Type exports for form data
 export type RegisterFormData = z.infer<typeof registerSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
@@ -105,3 +123,4 @@ export type UpdateCartItemFormData = z.infer<typeof updateCartItemSchema>;
 export type ReviewFormData = z.infer<typeof reviewSchema>;
 export type NewsletterFormData = z.infer<typeof newsletterSchema>;
 export type ContactFormData = z.infer<typeof contactSchema>;
+export type AccountDetailsFormData = z.infer<typeof accountDetailsSchema>;

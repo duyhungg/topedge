@@ -154,6 +154,12 @@ export function Header() {
               Products
             </Link>
             <Link
+              href="/dashboard"
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              Dashboard
+            </Link>
+            <Link
               href="/categories"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
@@ -219,6 +225,12 @@ export function Header() {
               </div>
 
               <div className="space-y-3">
+                <Link
+                  href="/dashboard"
+                  className="block text-sm font-medium hover:text-primary transition-colors"
+                >
+                  Dashboard
+                </Link>
                 <Link
                   href="/products"
                   className="block text-sm font-medium hover:text-primary transition-colors"
