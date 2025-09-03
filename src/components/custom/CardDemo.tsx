@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -19,9 +18,11 @@ export function CardDemo() {
         <CardDescription>
           Enter your email below to login to your account
         </CardDescription>
-        <CardAction>
-          <Button variant="link">Sign Up</Button>
-        </CardAction>
+        <div className="pt-2">
+          <Button variant="link" className="-px-1">
+            Sign Up
+          </Button>
+        </div>
       </CardHeader>
       <CardContent>
         <form>

@@ -1,9 +1,10 @@
+import type { ReactElement } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResponsiveContainer } from "recharts";
 
 interface ChartCardProps {
   title: string;
-  children: React.ReactNode;
+  children: ReactElement;
 }
 
 export function ChartCard({ title, children }: ChartCardProps) {
@@ -20,4 +21,3 @@ export function ChartCard({ title, children }: ChartCardProps) {
     </Card>
   );
 }
-
