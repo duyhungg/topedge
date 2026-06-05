@@ -26,6 +26,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "@/lib/useTranslations";
 import { loginSchema, LoginFormData } from "@/lib/validations";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 
@@ -34,6 +35,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -55,8 +57,8 @@ export default function LoginPage() {
       console.log("Login data:", data);
 
       toast({
-        title: "Welcome back!",
-        description: "You have been successfully signed in.",
+        title: t.login.welcomeBack,
+        description: t.login.successDescription,
         variant: "default",
       });
 
@@ -64,8 +66,8 @@ export default function LoginPage() {
       router.push("/");
     } catch (error) {
       toast({
-        title: "Login failed",
-        description: "Invalid email or password. Please try again.",
+        title: t.login.loginFailed,
+        description: t.login.loginError,
         variant: "destructive",
       });
     } finally {
@@ -79,10 +81,10 @@ export default function LoginPage() {
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">
-              Sign in to your account
+              {t.login.title}
             </CardTitle>
             <CardDescription className="text-center">
-              Enter your email and password to access your account
+              {t.login.description}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -96,11 +98,11 @@ export default function LoginPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t.login.emailLabel}</FormLabel>
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="Enter your email"
+                          placeholder={t.login.emailPlaceholder}
                           {...field}
                           disabled={isLoading}
                         />
@@ -115,12 +117,12 @@ export default function LoginPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>{t.login.passwordLabel}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password"
+                            placeholder={t.login.passwordPlaceholder}
                             {...field}
                             disabled={isLoading}
                           />
@@ -160,7 +162,7 @@ export default function LoginPage() {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="text-sm font-normal">
-                            Remember me
+                            {t.login.rememberMe}
                           </FormLabel>
                         </div>
                       </FormItem>
@@ -171,7 +173,7 @@ export default function LoginPage() {
                     href="/forgot-password"
                     className="text-sm font-medium text-primary hover:underline"
                   >
-                    Forgot password?
+                    {t.login.forgotPassword}
                   </Link>
                 </div>
 
@@ -179,7 +181,7 @@ export default function LoginPage() {
                   {isLoading && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Sign In
+                  {t.login.submit}
                 </Button>
               </form>
             </Form>
@@ -191,7 +193,7 @@ export default function LoginPage() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background px-2 text-muted-foreground">
-                    Or continue with
+                    {t.login.continueWith}
                   </span>
                 </div>
               </div>
@@ -237,12 +239,12 @@ export default function LoginPage() {
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
-                Don't have an account?{" "}
+                {t.login.noAccount}{" "}
                 <Link
                   href="/register"
                   className="font-medium text-primary hover:underline"
                 >
-                  Sign up
+                  {t.login.signUp}
                 </Link>
               </p>
             </div>

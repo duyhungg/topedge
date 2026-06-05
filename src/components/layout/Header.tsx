@@ -15,11 +15,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { useCart } from "@/lib/cart-context";
+import { useTranslations } from "@/lib/useTranslations";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart } = useCart();
+  const t = useTranslations();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -32,13 +35,13 @@ export function Header() {
             </div>
             <div className="flex items-center space-x-4">
               <Link href="/login" className="hover:underline">
-                Sign In
+                {t.header.signIn}
               </Link>
               <Link href="/register" className="hover:underline">
-                Sign Up
+                {t.header.signUp}
               </Link>
               <Link href="/help" className="hover:underline">
-                Help
+                {t.header.help}
               </Link>
             </div>
           </div>
@@ -93,19 +96,20 @@ export function Header() {
 
             {/* Desktop actions */}
             <div className="hidden md:flex items-center space-x-2">
+              <LocaleSwitcher />
               <ThemeToggle />
 
               <Button variant="ghost" size="icon" asChild>
                 <Link href="/wishlist">
                   <Heart className="h-5 w-5" />
-                  <span className="sr-only">Yêu thích</span>
+                  <span className="sr-only">{t.header.wishlist}</span>
                 </Link>
               </Button>
 
               <Button variant="ghost" size="icon" asChild>
                 <Link href="/account">
                   <User className="h-5 w-5" />
-                  <span className="sr-only">Tài khoản</span>
+                  <span className="sr-only">{t.header.account}</span>
                 </Link>
               </Button>
 
@@ -117,7 +121,7 @@ export function Header() {
                       {cart.itemCount}
                     </span>
                   )}
-                  <span className="sr-only">Shopping Cart</span>
+                  <span className="sr-only">{t.header.cart}</span>
                 </Link>
               </Button>
             </div>
@@ -129,7 +133,7 @@ export function Header() {
           <div className="relative">
             <Input
               type="search"
-              placeholder="Tìm kiếm sản phẩm..."
+              placeholder={t.header.searchPlaceholder}
               className="w-full pl-4 pr-12"
             />
             <Button
@@ -151,43 +155,43 @@ export function Header() {
               href="/products"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Products
+              {t.header.nav.products}
             </Link>
             <Link
               href="/dashboard"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Dashboard
+              {t.header.nav.dashboard}
             </Link>
             <Link
               href="/categories"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Categories
+              {t.header.nav.categories}
             </Link>
             <Link
               href="/deals"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Deals
+              {t.header.nav.deals}
             </Link>
             <Link
               href="/blog"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Blog
+              {t.header.nav.blog}
             </Link>
             <Link
               href="/about"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              About
+              {t.header.nav.about}
             </Link>
             <Link
               href="/contact"
               className="text-sm font-medium hover:text-primary transition-colors"
             >
-              Contact
+              {t.header.nav.contact}
             </Link>
           </div>
 
@@ -229,43 +233,43 @@ export function Header() {
                   href="/dashboard"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Dashboard
+                  {t.header.nav.dashboard}
                 </Link>
                 <Link
                   href="/products"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Products
+                  {t.header.nav.products}
                 </Link>
                 <Link
                   href="/categories"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Categories
+                  {t.header.nav.categories}
                 </Link>
                 <Link
                   href="/deals"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Deals
+                  {t.header.nav.deals}
                 </Link>
                 <Link
                   href="/blog"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Blog
+                  {t.header.nav.blog}
                 </Link>
                 <Link
                   href="/about"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  About
+                  {t.header.nav.about}
                 </Link>
                 <Link
                   href="/contact"
                   className="block text-sm font-medium hover:text-primary transition-colors"
                 >
-                  Contact
+                  {t.header.nav.contact}
                 </Link>
                 <div className="pt-3 border-t space-y-3">
                   <Link
@@ -273,14 +277,14 @@ export function Header() {
                     className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
                   >
                     <LogIn className="h-4 w-4" />
-                    Sign In
+                    {t.header.signIn}
                   </Link>
                   <Link
                     href="/register"
                     className="flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors"
                   >
                     <UserPlus className="h-4 w-4" />
-                    Sign Up
+                    {t.header.signUp}
                   </Link>
                 </div>
               </div>

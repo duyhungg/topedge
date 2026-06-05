@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link"
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useTranslations } from "@/lib/useTranslations"
 
 export function Footer() {
+  const t = useTranslations();
+
   return (
     <footer className="bg-muted/50 border-t">
       <div className="container mx-auto px-4 py-12">
@@ -17,7 +22,7 @@ export function Footer() {
               <span className="text-xl font-bold">ECommerce</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Nền tảng thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tuyệt vời với hàng triệu sản phẩm chất lượng.
+              {t.footer.tagline}
             </p>
             <div className="flex space-x-2">
               <Button variant="ghost" size="icon" asChild>
@@ -49,7 +54,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Liên kết nhanh</h3>
+            <h3 className="text-lg font-semibold">{t.footer.quickLinks}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -81,7 +86,7 @@ export function Footer() {
 
           {/* Customer Service */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Hỗ trợ khách hàng</h3>
+            <h3 className="text-lg font-semibold">{t.footer.customerService}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/help" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -118,7 +123,7 @@ export function Footer() {
 
           {/* Contact & Newsletter */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Liên hệ</h3>
+            <h3 className="text-lg font-semibold">{t.footer.contact}</h3>
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-muted-foreground" />
@@ -137,9 +142,9 @@ export function Footer() {
             </div>
 
             <div className="space-y-2">
-              <h4 className="font-medium">Đăng ký nhận tin</h4>
+              <h4 className="font-medium">{t.footer.newsletterTitle}</h4>
               <p className="text-sm text-muted-foreground">
-                Nhận thông tin khuyến mãi và sản phẩm mới
+                {t.footer.newsletterDescription}
               </p>
               <div className="flex space-x-2">
                 <Input
@@ -148,7 +153,7 @@ export function Footer() {
                   className="flex-1"
                 />
                 <Button size="sm">
-                  Đăng ký
+                  {t.footer.subscribe}
                 </Button>
               </div>
             </div>
@@ -159,17 +164,17 @@ export function Footer() {
         <div className="mt-8 pt-8 border-t">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-muted-foreground">
-              © 2024 ECommerce. Tất cả quyền được bảo lưu.
+              {t.footer.copyright}
             </div>
             <div className="flex items-center space-x-4 text-sm">
               <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
-                Chính sách bảo mật
+                {t.footer.privacy}
               </Link>
               <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
-                Điều khoản
+                {t.footer.terms}
               </Link>
               <Link href="/cookies" className="text-muted-foreground hover:text-foreground transition-colors">
-                Cookie
+                {t.footer.cookies}
               </Link>
             </div>
           </div>

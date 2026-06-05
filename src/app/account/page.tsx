@@ -5,6 +5,7 @@ import { User, Settings, ShoppingBag, Heart, LogOut, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AccountEditForm } from "@/components/custom/AccountEditForm";
 import { AccountDetailsFormData } from "@/lib/validations";
+import { useTranslations } from "@/lib/useTranslations";
 
 // Mock user data - replace with actual data fetching
 const initialUser = {
@@ -15,6 +16,7 @@ const initialUser = {
 };
 
 export default function AccountPage() {
+  const t = useTranslations();
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState(initialUser);
 
@@ -25,7 +27,7 @@ export default function AccountPage() {
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Tài khoản của tôi</h1>
+      <h1 className="text-3xl font-bold mb-8">{t.account.title}</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Sidebar Navigation */}
         <aside className="md:col-span-1">
@@ -35,35 +37,35 @@ export default function AccountPage() {
               className="flex items-center gap-3 px-4 py-2 text-primary bg-primary/10 rounded-lg font-semibold"
             >
               <User className="h-5 w-5" />
-              <span>Thông tin cá nhân</span>
+              <span>{t.account.personalInfo}</span>
             </a>
             <a
               href="#"
               className="flex items-center gap-3 px-4 py-2 text-muted-foreground hover:bg-muted/50 rounded-lg"
             >
               <ShoppingBag className="h-5 w-5" />
-              <span>Đơn hàng của tôi</span>
+              <span>{t.account.myOrders}</span>
             </a>
             <a
               href="#"
               className="flex items-center gap-3 px-4 py-2 text-muted-foreground hover:bg-muted/50 rounded-lg"
             >
               <Heart className="h-5 w-5" />
-              <span>Sản phẩm yêu thích</span>
+              <span>{t.account.savedItems}</span>
             </a>
             <a
               href="#"
               className="flex items-center gap-3 px-4 py-2 text-muted-foreground hover:bg-muted/50 rounded-lg"
             >
               <Settings className="h-5 w-5" />
-              <span>Cài đặt</span>
+              <span>{t.account.settings}</span>
             </a>
             <a
               href="#"
               className="flex items-center gap-3 px-4 py-2 text-muted-foreground hover:bg-muted/50 rounded-lg"
             >
               <LogOut className="h-5 w-5" />
-              <span>Đăng xuất</span>
+              <span>{t.account.logout}</span>
             </a>
           </nav>
         </aside>
@@ -80,38 +82,38 @@ export default function AccountPage() {
             ) : (
               <div>
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold">Thông tin cá nhân</h2>
+                  <h2 className="text-2xl font-semibold">{t.account.personalInfo}</h2>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setIsEditing(true)}
                   >
                     <Edit className="h-4 w-4 mr-2" />
-                    Chỉnh sửa
+                    {t.account.edit}
                   </Button>
                 </div>
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">
-                      Họ và tên
+                      {t.account.fullName}
                     </label>
                     <p className="font-semibold">{user.fullName}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">
-                      Email
+                      {t.account.email}
                     </label>
                     <p className="font-semibold">{user.email}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">
-                      Số điện thoại
+                      {t.account.phoneNumber}
                     </label>
                     <p className="font-semibold">{user.phoneNumber}</p>
                   </div>
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">
-                      Địa chỉ
+                      {t.account.address}
                     </label>
                     <p className="font-semibold">{user.address}</p>
                   </div>

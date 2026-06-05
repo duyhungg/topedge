@@ -13,6 +13,7 @@ import { Carousel, CarouselItem } from "@/components/ui/carousel";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "@/lib/useTranslations";
 import { formatCurrency } from "@/lib/utils";
 import { getProductById, getProductReviews, getRelatedProducts } from "@/lib/mock-data";
 
@@ -24,6 +25,7 @@ export default function ProductDetailPage() {
   const { addItem, getItemQuantity } = useCart();
   const { toast } = useToast();
 
+  const t = useTranslations();
   const product = getProductById(productId);
   const reviews = getProductReviews(productId);
   const relatedProducts = getRelatedProducts(productId);
@@ -33,10 +35,10 @@ export default function ProductDetailPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-          <p className="text-muted-foreground mb-4">The product you're looking for doesn't exist.</p>
+          <h1 className="text-2xl font-bold mb-4">{t.product.productNotFound}</h1>
+          <p className="text-muted-foreground mb-4">{t.product.productNotFoundDescription}</p>
           <Link href="/">
-            <Button>Back to Home</Button>
+            <Button>{t.products.backToHome}</Button>
           </Link>
         </div>
       </div>
@@ -46,8 +48,8 @@ export default function ProductDetailPage() {
   const handleAddToCart = () => {
     if (currentQuantityInCart + quantity > product.stockQuantity) {
       toast({
-        title: "Cannot add to cart",
-        description: `Only ${product.stockQuantity} items available in stock.`,
+        title: t.product.addFailedTitle,
+        description: t.product.stockAvailable.replace("{0}", String(product.stockQuantity)),
         variant: "destructive",
       });
       return;
@@ -63,8 +65,8 @@ export default function ProductDetailPage() {
     });
 
     toast({
-      title: "Added to cart",
-      description: `${quantity} ${product.title} added to your cart.`,
+      title: t.product.addedToCartTitle,
+      description: t.product.addedToCartDescription.replace("{0}", `${quantity} ${product.title}`),
       variant: "default",
     });
   };
@@ -87,11 +89,11 @@ export default function ProductDetailPage() {
       <Breadcrumb className="mb-6">
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            <BreadcrumbLink href="/">{t.product.home}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href="/products">Products</BreadcrumbLink>
+            <BreadcrumbLink href="/products">{t.product.products}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -191,7 +193,9 @@ export default function ProductDetailPage() {
           <div className="flex items-center gap-2">
             <div className={`h-2 w-2 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"}`} />
             <span className={`text-sm ${product.inStock ? "text-green-600" : "text-red-600"}`}>
-              {product.inStock ? `In Stock (${product.stockQuantity} available)` : "Out of Stock"}
+              {product.inStock
+                ? `${t.product.inStock} (${t.product.stockAvailable.replace("{0}", String(product.stockQuantity))})`
+                : t.product.outOfStock}
             </span>
           </div>
 
@@ -199,7 +203,7 @@ export default function ProductDetailPage() {
           {product.inStock && (
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-medium">Quantity:</span>
+                <span className="text-sm font-medium">{t.product.quantity}</span>
                 <div className="flex items-center border rounded-md">
                   <Button
                     variant="ghost"
@@ -224,7 +228,7 @@ export default function ProductDetailPage() {
               <div className="flex gap-3">
                 <Button onClick={handleAddToCart} className="flex-1">
                   <ShoppingCart className="mr-2 h-4 w-4" />
-                  Add to Cart
+                  {t.product.addToCart}
                 </Button>
                 <Button variant="outline" size="icon">
                   <Heart className="h-4 w-4" />
@@ -257,7 +261,7 @@ export default function ProductDetailPage() {
       {/* Specifications */}
       <Card className="mb-12">
         <CardContent className="p-6">
-          <h2 className="text-2xl font-bold mb-4">Specifications</h2>
+          <h2 className="text-2xl font-bold mb-4">{t.product.specifications}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {product.specifications.map((spec, index) => (
               <div key={index} className="flex justify-between py-2 border-b border-gray-100 last:border-b-0">
@@ -272,7 +276,7 @@ export default function ProductDetailPage() {
       {/* Reviews */}
       <Card className="mb-12">
         <CardContent className="p-6">
-          <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
+          <h2 className="text-2xl font-bold mb-4">{t.product.customerReviews}</h2>
           <div className="space-y-6">
             {reviews.map((review) => (
               <div key={review.id} className="border-b border-gray-100 last:border-b-0 pb-6 last:pb-0">
@@ -304,7 +308,7 @@ export default function ProductDetailPage() {
                     <p className="text-muted-foreground mb-2">{review.comment}</p>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <span>{review.createdAt.toLocaleDateString()}</span>
-                      <span>{review.helpful} people found this helpful</span>
+                      <span>{review.helpful} {t.product.helpfulPeople}</span>
                     </div>
                   </div>
                 </div>
@@ -317,7 +321,7 @@ export default function ProductDetailPage() {
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <div>
-          <h2 className="text-2xl font-bold mb-6">Related Products</h2>
+          <h2 className="text-2xl font-bold mb-6">{t.product.relatedProducts}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((relatedProduct) => (
               <Card key={relatedProduct.id} className="group cursor-pointer hover:shadow-lg transition-shadow">

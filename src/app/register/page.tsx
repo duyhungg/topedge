@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "@/lib/useTranslations";
 import { registerSchema, RegisterFormData } from "@/lib/validations";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 
@@ -34,6 +35,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const t = useTranslations();
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -57,8 +59,8 @@ export default function RegisterPage() {
       console.log("Registration data:", data);
 
       toast({
-        title: "Account created successfully!",
-        description: "Welcome to our platform. You can now sign in.",
+        title: t.register.successTitle,
+        description: t.register.successDescription,
         variant: "default",
       });
 
@@ -66,8 +68,8 @@ export default function RegisterPage() {
       router.push("/login");
     } catch (error) {
       toast({
-        title: "Registration failed",
-        description: "Something went wrong. Please try again.",
+        title: t.register.registrationFailed,
+        description: t.register.registrationError,
         variant: "destructive",
       });
     } finally {
@@ -81,10 +83,10 @@ export default function RegisterPage() {
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">
-              Create an account
+              {t.register.title}
             </CardTitle>
             <CardDescription className="text-center">
-              Enter your information to create your account
+              {t.register.description}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -98,10 +100,10 @@ export default function RegisterPage() {
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Full Name</FormLabel>
+                      <FormLabel>{t.register.fullName}</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter your full name"
+                          placeholder={t.register.fullNamePlaceholder}
                           {...field}
                           disabled={isLoading}
                         />
@@ -116,11 +118,11 @@ export default function RegisterPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t.register.email}</FormLabel>
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="Enter your email"
+                          placeholder={t.register.emailPlaceholder}
                           {...field}
                           disabled={isLoading}
                         />
@@ -135,11 +137,11 @@ export default function RegisterPage() {
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
+                      <FormLabel>{t.register.phoneNumber}</FormLabel>
                       <FormControl>
                         <Input
                           type="tel"
-                          placeholder="Enter your phone number"
+                          placeholder={t.register.phonePlaceholder}
                           {...field}
                           disabled={isLoading}
                         />
@@ -154,12 +156,12 @@ export default function RegisterPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>{t.register.password}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password"
+                            placeholder={t.register.passwordPlaceholder}
                             {...field}
                             disabled={isLoading}
                           />
@@ -189,12 +191,12 @@ export default function RegisterPage() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
+                      <FormLabel>{t.register.confirmPassword}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
                             type={showConfirmPassword ? "text" : "password"}
-                            placeholder="Confirm your password"
+                            placeholder={t.register.confirmPasswordPlaceholder}
                             {...field}
                             disabled={isLoading}
                           />
@@ -225,19 +227,19 @@ export default function RegisterPage() {
                   {isLoading && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  Create Account
+                  {t.register.submit}
                 </Button>
               </form>
             </Form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
-                Already have an account?{" "}
+                {t.register.alreadyHaveAccount}{" "}
                 <Link
                   href="/login"
                   className="font-medium text-primary hover:underline"
                 >
-                  Sign in
+                  {t.register.signIn}
                 </Link>
               </p>
             </div>

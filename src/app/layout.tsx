@@ -4,6 +4,7 @@ import "./globals.css";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CartProvider } from "@/lib/cart-context";
+import { LocaleProvider } from "@/lib/locale-context";
 import { Toaster } from "@/components/ui/toaster";
 
 // const geistSans = Geist({
@@ -39,10 +40,12 @@ export default function RootLayout({
           disableTransitionOnChange
           suppressHydrationWarning
         >
-          <CartProvider>
-            <MainLayout>{children}</MainLayout>
-            <Toaster />
-          </CartProvider>
+          <LocaleProvider>
+            <CartProvider>
+              <MainLayout>{children}</MainLayout>
+              <Toaster />
+            </CartProvider>
+          </LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

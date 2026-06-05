@@ -9,10 +9,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "@/lib/useTranslations";
 import { formatCurrency } from "@/lib/utils";
 import { mockProducts } from "@/lib/mock-data";
 
 export default function ProductsPage() {
+  const t = useTranslations();
   const { addItem } = useCart();
   const { toast } = useToast();
 
@@ -27,8 +29,8 @@ export default function ProductsPage() {
     });
 
     toast({
-      title: "Added to cart",
-      description: `${product.title} added to your cart.`,
+      title: t.product.addedToCartTitle,
+      description: t.product.addedToCartDescription.replace("{0}", product.title),
       variant: "default",
     });
   };
@@ -36,9 +38,9 @@ export default function ProductsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">All Products</h1>
+        <h1 className="text-3xl font-bold mb-2">{t.products.pageTitle}</h1>
         <p className="text-muted-foreground">
-          Discover our amazing collection of products
+          {t.products.pageDescription}
         </p>
       </div>
 
@@ -109,7 +111,7 @@ export default function ProductsPage() {
                   <div className="flex items-center gap-1">
                     <div className={`h-2 w-2 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"}`} />
                     <span className={`text-xs ${product.inStock ? "text-green-600" : "text-red-600"}`}>
-                      {product.inStock ? "In Stock" : "Out of Stock"}
+                      {product.inStock ? t.products.inStock : t.products.outOfStock}
                     </span>
                   </div>
 
@@ -120,7 +122,7 @@ export default function ProductsPage() {
                       className="h-8"
                     >
                       <ShoppingCart className="h-3 w-3 mr-1" />
-                      Add
+                      {t.products.addButton}
                     </Button>
                   )}
                 </div>
@@ -133,12 +135,12 @@ export default function ProductsPage() {
       {/* Empty state if no products */}
       {mockProducts.length === 0 && (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold mb-2">No products found</h2>
+          <h2 className="text-2xl font-bold mb-2">{t.products.noProductsTitle}</h2>
           <p className="text-muted-foreground mb-4">
-            We couldn't find any products matching your criteria.
+            {t.products.noProductsDescription}
           </p>
           <Link href="/">
-            <Button>Back to Home</Button>
+            <Button>{t.products.backToHome}</Button>
           </Link>
         </div>
       )}
