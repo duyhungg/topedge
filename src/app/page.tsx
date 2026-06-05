@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +12,8 @@ import {
 import { Star, ShoppingCart, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useTranslations } from "@/lib/useTranslations";
+import { mockProducts, getCategories } from "@/lib/mock-data";
+import { formatCurrency } from "@/lib/utils";
 
 export default function Home() {
   const t = useTranslations();
@@ -57,28 +60,11 @@ export default function Home() {
           {t.home.categoriesHeader}
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            {
-              name: "Electronics",
-              icon: "📱",
-              count: "1,234",
-              href: "/category/electronics",
-            },
-            {
-              name: "Fashion",
-              icon: "👕",
-              count: "2,567",
-              href: "/category/fashion",
-            },
-            { name: "Home", icon: "🏠", count: "890", href: "/category/home" },
-            {
-              name: "Books",
-              icon: "📚",
-              count: "3,456",
-              href: "/category/books",
-            },
-          ].map((category) => (
-            <Link key={category.name} href={category.href}>
+          {getCategories().map((category) => (
+            <Link
+              key={category.name}
+              href={`/products?category=${category.name.toLowerCase()}`}
+            >
               <Card className="text-center hover:shadow-lg transition-shadow cursor-pointer">
                 <CardContent className="pt-6">
                   <div className="text-4xl mb-2">{category.icon}</div>
@@ -102,47 +88,60 @@ export default function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i} className="group hover:shadow-lg transition-shadow">
+          {mockProducts.slice(0, 8).map((product) => (
+            <Card key={product.id} className="group hover:shadow-lg transition-shadow">
               <CardHeader className="p-0">
-                <div className="relative aspect-square bg-muted rounded-t-lg overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
-                    📦 {t.home.productName} {i + 1}
+                <Link href={`/product/${product.id}`}>
+                  <div className="relative aspect-square bg-muted rounded-t-lg overflow-hidden">
+                    <Image
+                      src={product.images[0]}
+                      alt={product.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform"
+                    />
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button size="icon" variant="secondary" className="h-8 w-8">
+                        <Heart className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    {product.originalPrice && (
+                      <Badge className="absolute top-2 left-2">
+                        -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
+                      </Badge>
+                    )}
                   </div>
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button size="icon" variant="secondary" className="h-8 w-8">
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <Badge className="absolute top-2 left-2">{t.home.discountLabel}</Badge>
-                </div>
+                </Link>
               </CardHeader>
               <CardContent className="p-4">
-                <h3 className="font-semibold line-clamp-2 mb-2">
-                  Tên sản phẩm rất dài có thể xuống dòng {i + 1}
-                </h3>
+                <Link href={`/product/${product.id}`}>
+                  <h3 className="font-semibold line-clamp-2 mb-2 hover:text-primary transition-colors">
+                    {product.title}
+                  </h3>
+                </Link>
                 <div className="flex items-center gap-1 mb-2">
                   {Array.from({ length: 5 }).map((_, j) => (
                     <Star
                       key={j}
                       className={`h-4 w-4 ${
-                        j < 4
+                        j < Math.floor(product.rating)
                           ? "fill-yellow-400 text-yellow-400"
                           : "text-muted-foreground"
                       }`}
                     />
                   ))}
                   <span className="text-sm text-muted-foreground ml-1">
-                    (123)
+                    ({product.reviewCount})
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-lg font-bold text-primary">
-                    299.000đ
+                    {formatCurrency(product.price)}
                   </span>
-                  <span className="text-sm text-muted-foreground line-through">
-                    399.000đ
-                  </span>
+                  {product.originalPrice && (
+                    <span className="text-sm text-muted-foreground line-through">
+                      {formatCurrency(product.originalPrice)}
+                    </span>
+                  )}
                 </div>
               </CardContent>
               <CardFooter className="p-4 pt-0">

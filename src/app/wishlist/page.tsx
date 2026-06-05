@@ -31,16 +31,19 @@ const wishlistItems = [
   },
 ];
 
-const EmptyWishlist = ({ t }: { t: ReturnType<typeof useTranslations> }) => (
-  <div className="text-center py-16">
-    <Heart className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
-    <h2 className="text-2xl font-semibold mb-2">{t.wishlist.emptyTitle}</h2>
-    <p className="text-muted-foreground mb-6">{t.wishlist.emptyDescription}</p>
-    <Link href="/products">
-      <Button>{t.wishlist.exploreProducts}</Button>
-    </Link>
-  </div>
-);
+const EmptyWishlist = () => {
+  const t = useTranslations();
+  return (
+    <div className="text-center py-16">
+      <Heart className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
+      <h2 className="text-2xl font-semibold mb-2">{t.wishlist.emptyTitle}</h2>
+      <p className="text-muted-foreground mb-6">{t.wishlist.emptyDescription}</p>
+      <Link href="/products">
+        <Button>{t.wishlist.exploreProducts}</Button>
+      </Link>
+    </div>
+  );
+};
 
 export default function WishlistPage() {
   const t = useTranslations();
